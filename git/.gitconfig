@@ -1,0 +1,7 @@
+[user]
+	email = paris3200@gmail.com
+	name = Jason Paris
+        username = paris3200
+
+[commit]
+  template = ~/.git_commit_template.txt
