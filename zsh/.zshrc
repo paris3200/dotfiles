@@ -10,7 +10,7 @@ fi
 #
 
 # Load configs
-# for config (~/.zsh/*.zsh) source $config
+for config (~/.zsh/*.zsh) source $config
 
 # Set History
 HISTFILE=~/.histfile
