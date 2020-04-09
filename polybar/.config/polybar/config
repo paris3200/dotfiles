@@ -29,8 +29,6 @@ fg = #ebdbb2
 
 background = #282828
 background-alt = #444
-;foreground = ${xrdb:color7:#222}
-;foreground = #dfdfdf
 foreground = #fbf1c7
 foreground-alt = #555
 primary = colors.red
@@ -61,21 +59,16 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 1
 
-
-;font-0 = i:pixelsize=;1
-;font-1 = z:fontformat=truetype:size=:antialias=false;0
-;font-2 = e:pixelsize=;1
+; Fonts
 font-0 = "Inconsolata Nerd Font Complete.otf:Inconsolata Nerd Font Medium":pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = "FontAwesome:pixelsize=16;1"
 font-3 = "Font Awesome 5 Brands:pixelsize=16;1"
-;font-2 = "Wuncon Siji:pixelsize=10;1"
-;font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
-;font-4 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
 
+; Bar Setup
 modules-left = filesystem pulseaudio
 modules-center = i3
-modules-right = pomobar memory cpu wlan eth battery temperature date
+modules-right = memory cpu wlan eth battery temperature date
 
 tray-position = right
 tray-padding = 2
@@ -351,13 +344,12 @@ label-disconnected-foreground = ${colors.foreground-alt}
 type = internal/date
 interval = 5
 
-date =
-date-alt = " %Y-%m-%d"
+date = "  %m/%d"
+date-alt = " %m/%d"
 
-time = %H:%M
+time = " %H:%M"
 time-alt = %H:%M
 
-format-prefix = 
 format-prefix-foreground = ${colors.foreground}
 format-underline = ${colors.blue}
 
