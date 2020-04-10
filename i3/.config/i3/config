@@ -172,6 +172,7 @@ bindsym $mod+r mode "resize"
 # Custom Key Bindings
 bindsym $mod+x move workspace to output right
 bindsym $mod+p exec $HOME/bin/i3lock-multimonitor/lock
+bindsym $mod+c workspace $ws2 exec kitty --session $HOME/.config/kitty/session_code.conf
 
 # Start on i3 start
 exec_always --no-startup-id feh --bg-scale '~/media/wallpaper/current_wallpaper.jpg'
