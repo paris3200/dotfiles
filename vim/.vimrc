@@ -87,12 +87,10 @@ Plug 'ledger/vim-ledger', { 'for': 'ledger' }
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'ambv/black'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'lervag/vimtex', {'for': ['tex']}
 Plug 'majutsushi/tagbar', { 'for': 'python'}
 Plug 'mitsuhiko/jinja2', { 'for': 'html'}
 Plug 'morhetz/gruvbox'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'reedes/vim-pencil', { 'for': ['mail', 'text', 'markdown']}
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tmhedberg/SimpylFold'
