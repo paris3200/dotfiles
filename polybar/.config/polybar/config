@@ -221,7 +221,7 @@ label-mode-background = ${colors.red}
 ;Get list of open workspaces
 ;# n=0; i3-msg -t get_workspaces | tr ',' '\n' | sed -nr 's/"name":"([^"]+)"/\1/p' | while read -r name; do echo "ws-icon-$((n++)) = \"${name};<insert-icon-here>\""; done
 ws-icon-0 = 1:www;
-ws-icon-1 = 2:term;
+ws-icon-1 = 2:term;
 ws-icon-2 = 3:vim;
 ws-icon-3 = 4:ssh;
 ws-icon-4 = 5:photo;
