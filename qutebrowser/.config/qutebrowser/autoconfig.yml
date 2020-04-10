@@ -6,5 +6,5 @@
 
 config_version: 2
 settings:
-  colors.completion.category.bg:
-    global: '#181818'
+  content.notifications:
+    https://www.reddit.com: false
