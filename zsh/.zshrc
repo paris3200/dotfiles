@@ -27,17 +27,18 @@ zstyle ':completion:*' menu select
 prompt powerlevel10k
 
 
+# Completion for kitty
+kitty + complete setup zsh | source /dev/stdin
+
+#Completion for poetry
+#
+fpath+=~/.zfunc
 zmodload zsh/complist
 compinit
 
 # Include hidden files in completion
 _comp_options+=(globdots) 
 
-# Completion for kitty
-kitty + complete setup zsh | source /dev/stdin
-
-#Completion for poetry
-fpath+=~/.zfunc
 
 # Vim Mode
 bindkey -v
