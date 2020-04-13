@@ -36,7 +36,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
-bindsym $mod+d exec "rofi -show run -lines 5 "
+bindsym $mod+d exec "rofi -show run -lines 10 "
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -129,6 +129,13 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+
 assign [class="Google-chrome"] $ws1
 assign [class="Signal"] $ws8
 assign [class="discord"] $ws9
@@ -175,7 +182,7 @@ bindsym $mod+p exec $HOME/bin/i3lock-multimonitor/lock
 bindsym $mod+c workspace $ws2 exec kitty --session $HOME/.config/kitty/session_code.conf
 
 # Start on i3 start
-exec_always --no-startup-id feh --bg-scale '~/media/wallpaper/current_wallpaper.jpg'
+exec_always --no-startup-id feh --bg-scale $HOME/media/wallpaper/current_wallpaper.jpg
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id xss-lock $HOME/bin/i3lock-multimonitor/lock
 exec --no-startup-id signal-desktop
