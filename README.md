@@ -2,7 +2,7 @@
 I manage my dot files with a bare git repo using instructions from
 https://www.atlassian.com/git/tutorials/dotfiles. 
 
-###Restore###
+## Restore
 
 Ensure the alias is added to shell config.  In my case, I would add it to
 .zshrc.  
