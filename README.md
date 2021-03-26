@@ -15,7 +15,7 @@ Then the git repo needs to be setup.
 
 ```
 echo ".cfg" >> .gitignore
-git clone --bare <git-repo-url> $HOME/.cfg
+git clone --bare git@github.com:paris3200/dotfiles.git $HOME/.cfg
 ```
 
 Add the alias to the current shell scope. 
