@@ -1,4 +1,4 @@
-config.load_autoconfig(True)
+config.load_autoconfig(False)
 c.auto_save.session = True
 c.completion.height = '40%'
 c.content.blocking.method = 'both'
@@ -19,3 +19,15 @@ c.fonts.default_size = '12pt'
 c.prompt.filebrowser = False
 c.spellcheck.languages = ["en-US"]
 config.source("gruvbox.py")
+
+# searches
+c.url.searchengines["a"] = "https://wiki.archlinux.org/?search={}"
+c.url.searchengines[
+    "g"
+] = "http://www.google.com/search?hl=en&source=hp&ie=ISO-8859-l&q={}"
+c.url.searchengines["y"] = "https://www.youtube.com/results?search_query={}"
+c.url.searchengines[
+    "w"
+] = "https://secure.wikimedia.org/wikipedia/en/w/index.php?title=Special%%3ASearch&search={}"
+c.url.searchengines["gh"] = "https://github.com/search?q={}&type=Code"
+c.url.searchengines["r"] = "https://reddit.com/r/{}"
