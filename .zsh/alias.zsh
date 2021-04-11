@@ -16,4 +16,5 @@ alias yay=paru
 
 
 # Config Alias
-alias config='/usr/bin/git --git-dir=/home/jason/.cfg/ --work-tree=/home/jason'
+alias config=dotbare
+
