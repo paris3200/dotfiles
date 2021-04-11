@@ -66,3 +66,7 @@ source /usr/share/zsh/plugins/zsh-you-should-use/you-should-use.plugin.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.config/powerlevel10k/.p10k.zsh ]] || source ~/.config/powerlevel10k/.p10k.zsh
+
+# FZF Keybindings
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
