@@ -13,4 +13,8 @@ export GNUPGHOME=$HOME/.config/gpg/
 export BAT_THEME="base16"
 export LC_CTYPE=en_US.UTF-8
 
+#Dotbare
+export DOTBARE_DIR="$HOME/.cfg"
+export DOTBARE="$HOME"
+
 
