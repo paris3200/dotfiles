@@ -1,3 +1,4 @@
+
 ---Neovim init.lua
 --See: https://oroques.dev/notes/neovim-init/
 
@@ -19,34 +20,35 @@ local function map(mode, lhs, rhs, opts)
 end
 
 ------------------------PLUGINS--------------------------------------
-cmd 'packadd paq-nvim'               -- load the package manager
-local paq = require('paq-nvim').paq  -- a convenient alias
-paq {'savq/paq-nvim', opt = true}    -- paq-nvim manages itself
-paq {'hoob3rt/lualine.nvim'}         -- Status Line
-paq {'junegunn/fzf.vim'}
-paq {'junegunn/fzf', hook = fn['fzf#install']}
-paq {'ledger/vim-ledger'}
-paq {'neovim/nvim-lspconfig'}
-paq {'nvim-treesitter/nvim-treesitter'} --Syntax Highlighting
-paq {'ojroques/nvim-lspfuzzy'}
-paq {'sainnhe/gruvbox-material'}     -- Gruvbox, but better
-paq {'shougo/deoplete-lsp'}          -- Completion Framework
-paq {'shougo/deoplete.nvim', hook = fn['remote#host#UpdateRemotePlugins']}
-paq {'tpope/vim-fugitive'}           -- Git helper
+cmd 'packadd paq-nvim'                      -- load the package manager
+local paq = require('paq-nvim').paq         -- a convenient alias
+paq {'savq/paq-nvim', opt = true}           -- paq-nvim manages itself
 paq {'airblade/vim-gitgutter'}
-paq {'lukas-reineke/indent-blankline.nvim', branch = "lua"}
-paq {'kyazdani42/nvim-web-devicons'} -- Icons for nvim-tree
-paq {'kyazdani42/nvim-tree.lua'}     -- File tree
+paq {'hoob3rt/lualine.nvim'}                -- Status Line
+paq {'junegunn/fzf', run = fn['fzf#install']}
+paq {'junegunn/fzf.vim'}
+paq {'kyazdani42/nvim-web-devicons'}        -- Icons for nvim-tree
+paq {'ledger/vim-ledger'}
+paq {'lukas-reineke/indent-blankline.nvim'}
+paq {'puremourning/vimspector'}             -- Debugging
+paq {'neovim/nvim-lspconfig'}
+paq {'nvim-treesitter/nvim-treesitter'}     --Syntax Highlighting
+paq {'ojroques/nvim-lspfuzzy'}
+paq {'sainnhe/gruvbox-material'}            -- Gruvbox, but better
+paq {'shougo/deoplete-lsp'}                 -- Completion Framework
+paq {'shougo/deoplete.nvim', run = fn['remote#host#UpdateRemotePlugins']}
+paq {'tpope/vim-fugitive'}                  -- Git helper
 paq {'vimwiki/vimwiki'}
+paq {'kkoomen/vim-doge'}
 
 
 -----------------------GLOBAL----------------------------------------
-g['deoplete#enable_at_startup'] = 1  -- enable deoplete at startup
+g['deoplete#enable_at_startup'] = 1         -- enable deoplete at startup
 g.mapleader = ","
 g.updatetime = 100
 g.inccommand='nosplit'
 g.vimwiki_list = { { path = '~/100_personal/10_19_administration/13_notes/13.01_vimwiki', syntax = 'markdown' } }
---vim.g.vimwiki_list = { { path = '~/100_personal/10_19_administration/13_notes?13.01_vimwiki', syntax = 'markdown', ext = '.md' } }
+g.doge_doc_standard_python = 'numpy'
 
 ------------------------OPTIONS---------------------------------------
 
@@ -83,24 +85,24 @@ map('i', '<C-w>', '<C-g>u<C-w>')  -- Make <C-w> undo-friendly
 map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 
-map('n', '<C-l>', '<cmd>noh<CR>')    -- Clear highlights
-map('n', '<leader>o', 'm`o<Esc>``')  -- Insert a newline in normal mode
-map('n', '<leader>ss', '<cmd>set spell!<CR>')  -- Enable spell checking
-
--------------------------NVIM_TREE----------------------------------
-map('n', '<leader>nt', '<cmd>NvimTreeToggle<CR>')
-map('n', '<leader>r>', '<cmd>NvimTreeRefresh<CR>')
+map('n', '<C-l>', '<cmd>noh<CR>')             -- Clear highlights
+map('n', '<leader>o', 'm`o<Esc>``')           -- Insert a newline in normal mode
+map('n', '<leader>ss', '<cmd>set spell!<CR>') -- Enable spell checking
+map('n', '<leader>b', '<cmd>Buffers<CR>')     -- Buffer list
+map('n', '<leader>f', '<cmd>FZF<CR>')         -- FZF list
+map('n', '<leader>g', '<cmd>GFiles<CR>')      -- FZF list
 
 -------------------------TREE-SITTER- --------------------------------
 local ts = require 'nvim-treesitter.configs'
 ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
 
 -------------------------LSP------------------------------------------
-local lsp = require 'lspconfig'
-local lspfuzzy = require 'lspfuzzy'
+local lsp = require('lspconfig')
+local lspfuzzy = require('lspfuzzy')
 
 --root_dir is where the LSP server will start: here at the project root otherwise in current folder
-lsp.pyls.setup {root_dir = lsp.util.root_pattern('.git', fn.getcwd())}
+require'lspconfig'.pyright.setup{}
+require'lspconfig'.pylsp.setup{root_dir = lsp.util.root_pattern('.git', fn.getcwd())}
 lspfuzzy.setup {}  -- Make the LSP client use FZF instead of the quickfix list
 
 map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
@@ -122,6 +124,7 @@ require('lualine').setup{
 cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'  -- disabled in visual mode
 cmd 'au BufRead,BufNewFile *.wiki setlocal filetype=markdown tw=80 fo+=t colorcolumn=80'
 
+-- Reformat emails in Mutt
 vim.api.nvim_exec([[
    autocmd VimLeave /tmp/neomutt-* !/home/jason/bin/email_process %  
 ]], false)
