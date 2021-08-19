@@ -86,7 +86,8 @@ window#waybar.chromium {
 }
 
 #clock {
-    /*background-color: #fe8019;*/
+    padding: 0 5px;
+    margin: 2px;
 }
 
 #battery {
