@@ -1,4 +1,4 @@
-vim: filetype=sway
+# vim: filetype=sway
 
 
 ### Variables
@@ -196,9 +196,10 @@ bar {
 }
 
 # Settings
-default_border pixel
-gaps outer 10
-gaps inner 10
+smart_gaps on
+default_border pixel 1
+gaps outer 2
+gaps inner 2
 
 
 exec mopidy
