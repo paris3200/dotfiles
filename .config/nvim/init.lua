@@ -40,6 +40,7 @@ paq {'shougo/deoplete.nvim', run = fn['remote#host#UpdateRemotePlugins']}
 paq {'tpope/vim-fugitive'}                  -- Git helper
 paq {'vimwiki/vimwiki'}
 paq {'kkoomen/vim-doge'}
+paq {'xiyaowong/nvim-transparent'}
 
 
 -----------------------GLOBAL----------------------------------------
@@ -49,7 +50,6 @@ g.updatetime = 100
 g.inccommand='nosplit'
 g.vimwiki_list = { { path = '~/100_personal/10_19_administration/13_notes/13.01_vimwiki', syntax = 'markdown' } }
 g.doge_doc_standard_python = 'numpy'
-
 ------------------------OPTIONS---------------------------------------
 
 local indent = 2
@@ -129,3 +129,5 @@ vim.api.nvim_exec([[
    autocmd VimLeave /tmp/neomutt-* !/home/jason/bin/email_process %  
 ]], false)
 
+---------------------- Transparency -----------------------------------
+g.transparent_enabled = 1
