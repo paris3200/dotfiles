@@ -20,6 +20,11 @@ c.prompt.filebrowser = False
 c.spellcheck.languages = ["en-US"]
 config.source("gruvbox.py")
 
+# Set File Picker
+config.set("fileselect.handler", "external")
+config.set("fileselect.single_file.command", ['kitty', '--class', 'ranger, ranger', '-e', 'ranger', '--chosefile', '{}'])
+config.set("fileselect.multiple_files.command", ['kitty', '--class', 'ranger,ranger', '-e', 'ranger', '--choosefiles', '{}'])
+
 # searches
 c.url.searchengines["a"] = "https://wiki.archlinux.org/?search={}"
 c.url.searchengines[
