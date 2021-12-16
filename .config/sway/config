@@ -12,8 +12,10 @@ set $up k
 set $right l
 
 # Desktop
-set $term foot
+set $term kitty
 
+# Wallpaper
+set $wallpaper ~/100_personal/40_49_media/41_photos/41.04_wallpaper/dark-night-mountains-4k_1602606095.jpg
 # Laptop
 #set $term kitty
 
@@ -26,7 +28,7 @@ set $menu exec kitty --class=launcher -e /bin/sway-launcher-desktop
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
-output * bg ~/.config/wallpaper.png fill
+output * bg $wallpaper fill
 #
 # Example configuration:
 #
@@ -37,10 +39,10 @@ output * bg ~/.config/wallpaper.png fill
 ### Idle configuration
 
 exec swayidle -w \
-         timeout 300 'swaylock -f -i ~/.config/wallpaper.png'\
+         timeout 300 'swaylock -f -i ~/.config/sway/wallpaper.jpg'\
          timeout 1800 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -i ~/.config/wallpaper.png'
+         before-sleep 'swaylock -f -i ~/.config/sway/wallpaper.jpg'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -121,6 +123,8 @@ exec swayidle -w \
     bindsym $mod+Shift+8 move container to workspace 8
     bindsym $mod+Shift+9 move container to workspace 9
     bindsym $mod+Shift+0 move container to workspace 10
+
+
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 #
@@ -202,21 +206,29 @@ gaps outer 2
 gaps inner 2
 
 
-exec mopidy
-exec --no-startup-id wl-paste -t text --watch clipman store --max-items=1000 1>> ~/.local/share/clipman.json 2>&1 &
+######################
+# Custom Key Bindings
+######################
 
-#
-## Custom Keybindings
-#
-
-# Lock Computer
-bindsym $mod+p exec swaylock -f -i ~/.config/wallpaper.png
+bindsym $mod+p exec swaylock
 bindsym $mod+x exec clipman pick -t rofi --histpath="~/.local/share/clipman.json"
 
-
+# Toggle Music
+bindsym $mod+m exec mpc toggle
 bindsym $mod+n exec rofi -show ssh
+# Take a screenshot with all output and save it into screenshots
+bindsym Print exec grim ~/screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
+# Take a Screenshot with the region select
+bindsym $mod+Print exec grim -g "$(slurp)" ~/screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
 
-#Start Mako
+######################
+## Autostart Programs
+######################
 exec mako
+exec mopidy
+exec --no-startup-id wl-paste -t text --watch clipman store --max-items=1000 1>> ~/.local/share/clipman.json 2>&1 &
+exec sway-audio-idle-inhibit
+exec redshift -c ~/.config/redshift/redshift.config
 
 include @sysconfdir@/sway/config.d/*
+
