@@ -20,28 +20,7 @@ local function map(mode, lhs, rhs, opts)
 end
 
 ------------------------PLUGINS--------------------------------------
-cmd 'packadd paq-nvim'                      -- load the package manager
-local paq = require('paq-nvim').paq         -- a convenient alias
-paq {'savq/paq-nvim', opt = true}           -- paq-nvim manages itself
-paq {'airblade/vim-gitgutter'}
-paq {'hoob3rt/lualine.nvim'}                -- Status Line
-paq {'junegunn/fzf', run = fn['fzf#install']}
-paq {'junegunn/fzf.vim'}
-paq {'kyazdani42/nvim-web-devicons'}        -- Icons for nvim-tree
-paq {'ledger/vim-ledger'}
-paq {'lukas-reineke/indent-blankline.nvim'}
-paq {'puremourning/vimspector'}             -- Debugging
-paq {'neovim/nvim-lspconfig'}
-paq {'nvim-treesitter/nvim-treesitter'}     --Syntax Highlighting
-paq {'ojroques/nvim-lspfuzzy'}
-paq {'sainnhe/gruvbox-material'}            -- Gruvbox, but better
-paq {'shougo/deoplete-lsp'}                 -- Completion Framework
-paq {'shougo/deoplete.nvim', run = fn['remote#host#UpdateRemotePlugins']}
-paq {'tpope/vim-fugitive'}                  -- Git helper
-paq {'vimwiki/vimwiki'}
-paq {'kkoomen/vim-doge'}
-paq {'xiyaowong/nvim-transparent'}
-
+require('plugins')
 
 -----------------------GLOBAL----------------------------------------
 g['deoplete#enable_at_startup'] = 1         -- enable deoplete at startup
@@ -50,6 +29,7 @@ g.updatetime = 100
 g.inccommand='nosplit'
 g.vimwiki_list = { { path = '~/100_personal/10_19_administration/13_notes/13.01_vimwiki', syntax = 'markdown' } }
 g.doge_doc_standard_python = 'numpy'
+g.indentLine_fileTypeExclude = '[alpha]'
 ------------------------OPTIONS---------------------------------------
 
 local indent = 2
@@ -95,6 +75,11 @@ map('n', '<leader>g', '<cmd>GFiles<CR>')      -- FZF list
 -------------------------TREE-SITTER- --------------------------------
 local ts = require 'nvim-treesitter.configs'
 ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
+
+-------------------------NVIM_TREE----------------------------------
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+map('n', '<leader>nt', '<cmd>NvimTreeToggle<CR>')
+map('n', '<leader>r>', '<cmd>NvimTreeRefresh<CR>')
 
 -------------------------LSP------------------------------------------
 local lsp = require('lspconfig')
