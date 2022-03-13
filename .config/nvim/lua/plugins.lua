@@ -1,41 +1,19 @@
-
-return require('packer').startup(function()
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
-  use {
-    'kyazdani42/nvim-tree.lua',
-    requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
-    },
-    config = function() require'nvim-tree'.setup {} end
+require "paq" {
+    "savq/paq-nvim";                        -- Let Paq manage itself
+    "sainnhe/gruvbox-material";             -- Gruvbox, but better
+    "hoob3rt/lualine.nvim";                 -- Status Line
+    "kyazdani42/nvim-tree.lua";             -- File tree
+    "kyazdani42/nvim-web-devicons";         -- Required by lualine & Nvim-tree
+    "vimwiki/vimwiki";                      -- Vimwiki
+    "airblade/vim-gitgutter";               -- Git Gutter
+    "neovim/nvim-lspconfig";
+    "ojroques/nvim-lspfuzzy";               -- lspfuzzy
+    "junegunn/fzf";                         -- Required by nvim-lspfuzzy
+    "junegunn/fzf.vim";                     -- Required by nvim-lspfuzzy
+    "lukas-reineke/indent-blankline.nvim";
+    "kkoomen/vim-doge";                     -- Documentation Framework
+    "petobens/poet-v";                      -- Poetry virtual env
+    "ledger/vim-ledger";                    -- Ledger
+    "nvim-treesitter/nvim-treesitter";      -- Beter syntax highlighting
 }
-  use {
-          'nvim-treesitter/nvim-treesitter',
-          run = ':TSUpdate'
-      }
 
-  use 'airblade/vim-gitgutter'
-  use 'lukas-reineke/indent-blankline.nvim'
-  use 'neovim/nvim-lspconfig'
-
-  -- Theme
-  use 'sainnhe/gruvbox-material'  -- Gruvbox, but better
-  use 'vimwiki/vimwiki'
-  -- Status Line
-  use {
-    'hoob3rt/lualine.nvim',
-    requires = {
-      'kyazdani42/nvim-web-devicons',
-      opt = true
-    },
-  }
-  -- Documentation Framework
-  use 'kkoomen/vim-doge'
-  use {
-    'goolord/alpha-nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function ()
-        require'alpha'.setup(require'alpha.themes.startify'.opts)
-    end
-  }
- end)

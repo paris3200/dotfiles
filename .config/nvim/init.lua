@@ -1,7 +1,3 @@
-
----Neovim init.lua
---See: https://oroques.dev/notes/neovim-init/
-
 ------------------------HELPERS--------------------------------------
 local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
 local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
@@ -12,7 +8,6 @@ local function opt(scope, key, value)
   scopes[scope][key] = value
   if scope ~= 'o' then scopes['o'][key] = value end
 end
-
 local function map(mode, lhs, rhs, opts)
   local options = {noremap = true}
   if opts then options = vim.tbl_extend('force', options, opts) end
@@ -22,14 +17,6 @@ end
 ------------------------PLUGINS--------------------------------------
 require('plugins')
 
------------------------GLOBAL----------------------------------------
-g['deoplete#enable_at_startup'] = 1         -- enable deoplete at startup
-g.mapleader = ","
-g.updatetime = 100
-g.inccommand='nosplit'
-g.vimwiki_list = { { path = '~/100_personal/10_19_administration/13_notes/13.01_vimwiki', syntax = 'markdown' } }
-g.doge_doc_standard_python = 'numpy'
-g.indentLine_fileTypeExclude = '[alpha]'
 ------------------------OPTIONS---------------------------------------
 
 local indent = 2
@@ -55,31 +42,40 @@ opt('w', 'number', true)                              -- Print line number
 opt('w', 'relativenumber', true)                      -- Relative line numbers
 opt('w', 'wrap', false)                               -- Disable line wrap
 
+-----------------------GLOBAL----------------------------------------
+g['deoplete#enable_at_startup'] = 0         -- enable deoplete at startup
+g.mapleader = ","
+g.updatetime = 100
+g.inccommand='nosplit'
+g.vimwiki_list = { { path = '~/100_personal/10_19_administration/13_notes/13.01_vimwiki', syntax = 'markdown', ext = '.md' } }
+g.doge_doc_standard_python = 'numpy'
+g.indentLine_fileTypeExclude = '[alpha]'
+g.ledger_maxwidth = 80
+g.ledger_align_at = 60
+g.transparent_enabled = 1
+g.python3_host_prog = '/usr/bin/python'
+
+-------------------------Status Line----------------------------------
+require('lualine').setup{
+  options = {theme = 'gruvbox-material', icons_enabled = true,}
+}
 
 -------------------------MAPPINGS- ----------------------------------
 map('', '<leader>c', '"+y')       -- Copy to clipboard in normal, visual, select and operator modes
 map('i', '<C-u>', '<C-g>u<C-u>')  -- Make <C-u> undo-friendly
 map('i', '<C-w>', '<C-g>u<C-w>')  -- Make <C-w> undo-friendly
 
--- <Tab> to navigate the completion menu
+
+            -- <Tab> to navigate the completion menu
 map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 
 map('n', '<C-l>', '<cmd>noh<CR>')             -- Clear highlights
-map('n', '<leader>o', 'm`o<Esc>``')           -- Insert a newline in normal mode
+map('n', '<leader>o', 'm`o<Esc>``')           -- Insert a nwline in normal mode
 map('n', '<leader>ss', '<cmd>set spell!<CR>') -- Enable spell checking
 map('n', '<leader>b', '<cmd>Buffers<CR>')     -- Buffer list
 map('n', '<leader>f', '<cmd>FZF<CR>')         -- FZF list
 map('n', '<leader>g', '<cmd>GFiles<CR>')      -- FZF list
-
--------------------------TREE-SITTER- --------------------------------
-local ts = require 'nvim-treesitter.configs'
-ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
-
--------------------------NVIM_TREE----------------------------------
-local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-map('n', '<leader>nt', '<cmd>NvimTreeToggle<CR>')
-map('n', '<leader>r>', '<cmd>NvimTreeRefresh<CR>')
 
 -------------------------LSP------------------------------------------
 local lsp = require('lspconfig')
@@ -100,19 +96,51 @@ map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
 map('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>')
 map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
 
--------------------------LUALINE----------------------------------
-require('lualine').setup{
-  options = {theme = 'gruvbox_material', icons_enabled = true,}
+-------------------------NVIM_TREE----------------------------------
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+map('n', '<leader>nt', '<cmd>NvimTreeToggle<CR>')
+map('n', '<leader>r>', '<cmd>NvimTreeRefresh<CR>')
+require'nvim-tree'.setup()
+
+-------------------------TREE-SITTER- --------------------------------
+require'nvim-treesitter.configs'.setup {
+  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = "maintained",
+
+  -- Install languages synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- List of parsers to ignore installing
+  ignore_install = { "javascript" },
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- list of language that will be disabled
+    disable = { "ledger"},
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
 }
+
+-------------------------Ledger----------------------------------
+map('n', '<leader>t', '<cmd>call ledger#transaction_state_toggle(line("."), "*!")<CR>')
+
+
 
 -------------------------COMMANDS------------------------------------
 cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'  -- disabled in visual mode
 cmd 'au BufRead,BufNewFile *.wiki setlocal filetype=markdown tw=80 fo+=t colorcolumn=80'
 
 -- Reformat emails in Mutt
+-- Align ledger files on save
 vim.api.nvim_exec([[
    autocmd VimLeave /tmp/neomutt-* !/home/jason/bin/email_process %  
-]], false)
+   autocmd BufWritePre *.ldg :LedgerAlignBuffer
 
----------------------- Transparency -----------------------------------
-g.transparent_enabled = 1
+]], false)
