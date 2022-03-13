@@ -22,8 +22,9 @@ config.source("gruvbox.py")
 
 # Set File Picker
 config.set("fileselect.handler", "external")
-config.set("fileselect.single_file.command", ['kitty', '--class', 'ranger, ranger', '-e', 'ranger', '--chosefile', '{}'])
+config.set("fileselect.single_file.command", ['kitty', '--class', 'ranger, ranger', '-e', 'ranger', '--choosefiles', '{}'])
 config.set("fileselect.multiple_files.command", ['kitty', '--class', 'ranger,ranger', '-e', 'ranger', '--choosefiles', '{}'])
+config.set("content.javascript.can_open_tabs_automatically", True)
 
 # searches
 c.url.searchengines["a"] = "https://wiki.archlinux.org/?search={}"
