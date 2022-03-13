@@ -1,0 +1,9 @@
+font=hack
+font-size=10
+color=000000
+inside-color=282828
+image=~/100_personal/40_49_media/41_photos/41.04_wallpaper/dark-night-mountains-4k_1602606095.jpg
+ignore-empty-password
+no-unlock-indicator
+daemonize
+
