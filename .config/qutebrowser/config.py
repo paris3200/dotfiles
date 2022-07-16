@@ -22,9 +22,8 @@ config.source("gruvbox.py")
 
 # Set File Picker
 config.set("fileselect.handler", "external")
-config.set("fileselect.single_file.command", ['kitty', '--class', 'ranger, ranger', '-e', 'ranger', '--choosefiles', '{}'])
+config.set("fileselect.single_file.command", ['kitty', '--class', 'ranger, ranger', '-e', 'ranger', '--chosefile', '{}'])
 config.set("fileselect.multiple_files.command", ['kitty', '--class', 'ranger,ranger', '-e', 'ranger', '--choosefiles', '{}'])
-config.set("content.javascript.can_open_tabs_automatically", True)
 
 # searches
 c.url.searchengines["a"] = "https://wiki.archlinux.org/?search={}"
@@ -37,3 +36,13 @@ c.url.searchengines[
 ] = "https://secure.wikimedia.org/wikipedia/en/w/index.php?title=Special%%3ASearch&search={}"
 c.url.searchengines["gh"] = "https://github.com/search?q={}&type=Code"
 c.url.searchengines["r"] = "https://reddit.com/r/{}"
+
+# Bindings
+config.unbind("H")
+config.unbind("L")
+config.unbind("J")
+config.unbind("K")
+config.bind("L", 'tab-next')
+config.bind("H", 'tab-prev')
+config.bind("J", 'back')
+config.bind("K", 'forward')
