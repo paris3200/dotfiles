@@ -1,146 +1,26 @@
-------------------------HELPERS--------------------------------------
-local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
-local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
-local g = vim.g      -- a table to access global variables
-local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
-
-local function opt(scope, key, value)
-  scopes[scope][key] = value
-  if scope ~= 'o' then scopes['o'][key] = value end
-end
-local function map(mode, lhs, rhs, opts)
-  local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options, opts) end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
-------------------------PLUGINS--------------------------------------
-require('plugins')
-
-------------------------OPTIONS---------------------------------------
-
-local indent = 2
-cmd 'colorscheme gruvbox-material'                    -- Put your favorite colorscheme here
-opt('b', 'expandtab', true)                           -- Use spaces instead of tabs
-opt('b', 'shiftwidth', indent)                        -- Size of an indent
-opt('b', 'smartindent', true)                         -- Insert indents automatically
-opt('b', 'tabstop', indent)                           -- Number of spaces tabs count for
-opt('o', 'completeopt', 'menuone,noinsert,noselect')  -- Completion options (for deoplete)
-opt('o', 'hidden', true)                              -- Enable modified buffers in background
-opt('o', 'ignorecase', true)                          -- Ignore case
-opt('o', 'joinspaces', false)                         -- No double spaces with join after a dot
-opt('o', 'scrolloff', 4 )                             -- Lines of context
-opt('o', 'shiftround', true)                          -- Round indent
-opt('o', 'sidescrolloff', 8 )                         -- Columns of context
-opt('o', 'smartcase', true)                           -- Don't ignore case with capitals
-opt('o', 'splitbelow', true)                          -- Put new windows below current
-opt('o', 'splitright', true)                          -- Put new windows right of current
-opt('o', 'termguicolors', true)                       -- True color support
-opt('o', 'wildmode', 'list:longest')                  -- Command-line completion mode
-opt('w', 'list', true)                                -- Show some invisible characters (tabs...)
-opt('w', 'number', true)                              -- Print line number
-opt('w', 'relativenumber', true)                      -- Relative line numbers
-opt('w', 'wrap', false)                               -- Disable line wrap
-
------------------------GLOBAL----------------------------------------
-g['deoplete#enable_at_startup'] = 0         -- enable deoplete at startup
-g.mapleader = ","
-g.updatetime = 100
-g.inccommand='nosplit'
-g.vimwiki_list = { { path = '~/100_personal/10_19_administration/13_notes/13.01_vimwiki', syntax = 'markdown', ext = '.md' } }
-g.doge_doc_standard_python = 'numpy'
-g.indentLine_fileTypeExclude = '[alpha]'
-g.ledger_maxwidth = 80
-g.ledger_align_at = 60
-g.transparent_enabled = 1
-g.python3_host_prog = '/usr/bin/python'
-
--------------------------Status Line----------------------------------
-require('lualine').setup{
-  options = {theme = 'gruvbox-material', icons_enabled = true,}
-}
-
--------------------------MAPPINGS- ----------------------------------
-map('', '<leader>c', '"+y')       -- Copy to clipboard in normal, visual, select and operator modes
-map('i', '<C-u>', '<C-g>u<C-u>')  -- Make <C-u> undo-friendly
-map('i', '<C-w>', '<C-g>u<C-w>')  -- Make <C-w> undo-friendly
-
-
-            -- <Tab> to navigate the completion menu
-map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
-map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
-
-map('n', '<C-l>', '<cmd>noh<CR>')             -- Clear highlights
-map('n', '<leader>o', 'm`o<Esc>``')           -- Insert a nwline in normal mode
-map('n', '<leader>ss', '<cmd>set spell!<CR>') -- Enable spell checking
-map('n', '<leader>b', '<cmd>Buffers<CR>')     -- Buffer list
-map('n', '<leader>f', '<cmd>FZF<CR>')         -- FZF list
-map('n', '<leader>g', '<cmd>GFiles<CR>')      -- FZF list
-
--------------------------LSP------------------------------------------
-local lsp = require('lspconfig')
-local lspfuzzy = require('lspfuzzy')
-
---root_dir is where the LSP server will start: here at the project root otherwise in current folder
-require'lspconfig'.pyright.setup{}
-require'lspconfig'.pylsp.setup{root_dir = lsp.util.root_pattern('.git', fn.getcwd())}
-lspfuzzy.setup {}  -- Make the LSP client use FZF instead of the quickfix list
-
-map('n', '<space>,', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-map('n', '<space>;', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-map('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-map('n', '<space>d', '<cmd>lua vim.lsp.buf.definition()<CR>')
-map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-map('n', '<space>h', '<cmd>lua vim.lsp.buf.hover()<CR>')
-map('n', '<space>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
-map('n', '<space>r', '<cmd>lua vim.lsp.buf.references()<CR>')
-map('n', '<space>s', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-
--------------------------NVIM_TREE----------------------------------
-local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-map('n', '<leader>nt', '<cmd>NvimTreeToggle<CR>')
-map('n', '<leader>r>', '<cmd>NvimTreeRefresh<CR>')
-require'nvim-tree'.setup()
-
--------------------------TREE-SITTER- --------------------------------
-require'nvim-treesitter.configs'.setup {
-  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = "maintained",
-
-  -- Install languages synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- List of parsers to ignore installing
-  ignore_install = { "javascript" },
-
-  highlight = {
-    -- `false` will disable the whole extension
-    enable = true,
-
-    -- list of language that will be disabled
-    disable = { "ledger"},
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
-
--------------------------Ledger----------------------------------
-map('n', '<leader>t', '<cmd>call ledger#transaction_state_toggle(line("."), "*!")<CR>')
-
-
-
--------------------------COMMANDS------------------------------------
-cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'  -- disabled in visual mode
-cmd 'au BufRead,BufNewFile *.wiki setlocal filetype=markdown tw=80 fo+=t colorcolumn=80'
-
--- Reformat emails in Mutt
--- Align ledger files on save
-vim.api.nvim_exec([[
-   autocmd VimLeave /tmp/neomutt-* !/home/jason/bin/email_process %  
-   autocmd BufWritePre *.ldg :LedgerAlignBuffer
-
-]], false)
+require "user.options"
+require "user.keymaps"
+require "user.plugins"
+require "user.autocommands"
+require "user.colorscheme"
+require "user.cmp"
+require "user.telescope"
+require "user.treesitter"
+require "user.autopairs"
+require "user.comment"
+require "user.gitsigns"
+require "user.nvim-tree"
+require "user.bufferline"
+require "user.lualine"
+require "user.vim-ledger"
+require "user.toggleterm"
+require "user.project"
+require "user.impatient"
+require "user.illuminate"
+require "user.indentline"
+require "user.alpha"
+require "user.lsp"
+require "user.dap"
+require "user.neogen"
+require "user.whichkey"
+require "user.mkdnflow"
