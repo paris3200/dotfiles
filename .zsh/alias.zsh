@@ -20,3 +20,7 @@ alias lla="exa --long --all --time-style=long-iso"
 alias t="todo.sh"
 alias ts="timesheet"
 alias vimf="tmux attach -t ledger" 
+
+if command -v colordiff >/dev/null; then
+  alias diff="colordiff"
+fi
