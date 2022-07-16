@@ -1,4 +1,4 @@
-# vim: filetype=json
+//vim: filetype=json
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
@@ -16,9 +16,9 @@
          "format-icons": {
              "1": "",
              "2": "",
-             "3": "",
+             "3": "",
              "4": "",
-             "5": "",
+             "5": "",
              "7": "",
              "8": "",
              "9": "",
