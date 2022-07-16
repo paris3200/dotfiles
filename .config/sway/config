@@ -199,11 +199,12 @@ bar {
     }
 }
 
+
 # Settings
 smart_gaps on
-default_border pixel 1
-gaps outer 2
-gaps inner 2
+default_border pixel 2
+gaps outer 5
+gaps inner 10
 
 
 ######################
@@ -211,7 +212,7 @@ gaps inner 2
 ######################
 
 bindsym $mod+p exec swaylock
-bindsym $mod+x exec clipman pick -t rofi --histpath="~/.local/share/clipman.json"
+bindsym $mod+x exec clipman pick -t wofi --histpath="~/.local/share/clipman.json"
 
 # Toggle Music
 bindsym $mod+m exec mpc toggle
@@ -221,6 +222,9 @@ bindsym Print exec grim ~/screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
 # Take a Screenshot with the region select
 bindsym $mod+Print exec grim -g "$(slurp)" ~/screenshots/$(date +%Y-%m-%d_%H-%m-%s).jpg
 
+bindsym $mod+F9 exec pactl set-sink-volume 1 -10%
+bindsym $mod+F10 exec pactl set-sink-volume 1 +10%
+ 
 ######################
 ## Autostart Programs
 ######################
@@ -229,6 +233,13 @@ exec mopidy
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=1000 1>> ~/.local/share/clipman.json 2>&1 &
 exec sway-audio-idle-inhibit
 exec redshift -c ~/.config/redshift/redshift.config
+
+workspace 8
+exec signal-desktop
+workspace 7
+exec "kitty --class=mutt -e tmux attach -t mutt"
+workspace 1
+exec qutebrowser
 
 include @sysconfdir@/sway/config.d/*
 
