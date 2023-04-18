@@ -19,7 +19,7 @@ alias ll="exa --long --time-style=long-iso"
 alias lla="exa --long --all --time-style=long-iso"
 alias t="todo.sh"
 alias ts="timesheet"
-alias vimf="tmux attach -t ledger" 
+alias vimf="zellij -s ledger --layout=/home/jason/.config/zellij/layouts/ledger-layout.kdl" 
 
 if command -v colordiff >/dev/null; then
   alias diff="colordiff"
