@@ -1,0 +1,29 @@
+layout {
+  pane size=1 borderless=true {
+      plugin location="zellij:tab-bar"
+  }
+
+  pane split_direction="vertical"{
+
+    pane edit="/home/jason/areas/finances/ledger/2023/transactions.ldg" name="Ledger" size="42%"
+    
+    pane split_direction="horizontal" size="25%"{
+
+      pane name="Cleared" command="viddy"{
+          args "ledger -f ~/areas/finances/ledger/book.ldg bal Assets:Current Liabilities --cleared --value"
+        }
+ 
+      pane name="End of Month" command="viddy"{
+          args "ledger -f ~/areas/finances/ledger/book.ldg bal Assets:Current Liabilities --value -e 2023/6/1"
+        }
+    }
+
+    pane split_direction="horizontal" size="35%"{
+      pane name="term" {
+        }
+    }
+  }
+  pane size=1 borderless=true {
+          plugin location="zellij:status-bar"
+      }
+}
