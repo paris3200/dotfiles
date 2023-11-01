@@ -1,20 +1,21 @@
 local M = {
   "nvim-neorg/neorg",
-  build = ":Neorg sync-parsers",
+  run = ":Neorg sync-parsers",
   dependencies = { { "nvim-lua/plenary.nvim" } },
-  event = "VeryLazy",
+  ft = "norg",
 }
 
 function M.config()
   require('neorg').setup {
     load = {
       ["core.defaults"] = {}, -- Loads default behaviour
-      ["core.norg.concealer"] = { -- Adds pretty icons to your documents
+      ["core.summary"] = {}, -- Loads default behaviour
+      ["core.concealer"] = { -- Adds pretty icons to your documents
         config = {
           icon_preset = "diamond",
         }
       },
-      ["core.norg.dirman"] = { -- Manages Neorg workspaces
+      ["core.dirman"] = { -- Manages Neorg workspaces
         config = {
           workspaces = {
             notes = "~/notes",
